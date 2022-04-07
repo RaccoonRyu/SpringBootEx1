@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/bootex?characterEncoding=UTF-8&serverTimezone=UTC
+    username: bootuser
+    password: bootuser
+
