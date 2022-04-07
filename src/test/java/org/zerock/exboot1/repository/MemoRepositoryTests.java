@@ -21,7 +21,7 @@ public class MemoRepositoryTests {
     @Autowired
     Memorepository memorepository;
 
-    /*@Test
+    @Test
     // Memorepository가 정상적인 실제 객체로 잘 생성되는지 확인
     public void testClass(){
         System.out.println(memorepository.getClass().getName());
@@ -55,7 +55,7 @@ public class MemoRepositoryTests {
     public void testUpdate() {
         MemoDTO memoDTO = MemoDTO.builder().mno(100L).memoText("Update Text").build(); // mno가 100번인 객체를 update
         System.out.println(memorepository.save(memoDTO));
-    }*/
+    }
 
     @Test
     // Memorepository가 1개의 Memo객체를 정상적으로 delete하는지 확인
