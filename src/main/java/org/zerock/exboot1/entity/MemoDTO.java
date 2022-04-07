@@ -17,6 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class MemoDTO {
 
     @Id // DB의 PK에 해당하는 필드 지정
