@@ -3,6 +3,10 @@ package org.zerock.exboot1.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.zerock.exboot1.entity.MemoDTO;
 
 import java.util.Optional;
@@ -62,5 +66,40 @@ public class MemoRepositoryTests {
     public void testDelete() {
        Long mno = 100L; // mno가 100번인 객체를 삭제
        memorepository.deleteById(mno);
+    }
+
+    @Test
+    // 페이지 처리와 정렬이 정상적으로 이뤄지는지 확인
+    public void testPageDefault() {
+
+        // 1페이지당 10개의 데이터
+        Pageable page = PageRequest.of(0,10); // 페이지 처리는 반드시 0부터 시작됨을 주의!
+
+        Page<MemoDTO> result = memorepository.findAll(page);
+        System.out.println(result); // 현재 데이터가 199개 이므로 20page가 출력
+
+        System.out.println("================================================================");
+
+        System.out.println("Total Pages : "+result.getTotalPages()); // 총 페이지 수
+        System.out.println("Total Count : "+result.getTotalElements()); // 전체 페이지 개수
+        System.out.println("Page Number : "+result.getNumber()); // 현재 페이지 번호(0부터 시작)
+        System.out.println("Page Size : "+result.getSize()); // 페이지당 데이터 개수
+        System.out.println("Has next page? : "+result.hasNext()); // 다음 페이지 존재 여부
+        System.out.println("First page? : "+result.isFirst()); // 시작 페이지(0) 여부
+    }
+
+    @Test
+    // 페이징에 정렬 조건이 정상적으로 추가되었는지 테스트
+    public void testSort() {
+        
+        Sort sort1 = Sort.by("mno").descending(); // mno 필드 기준 내림차순의 정렬조건 설정
+
+        Pageable page = PageRequest.of(0, 10, sort1);
+
+        Page<MemoDTO> result = memorepository.findAll(page);
+
+        result.get().forEach(memoDTO -> {
+            System.out.println(memoDTO);
+        });
     }
 }
