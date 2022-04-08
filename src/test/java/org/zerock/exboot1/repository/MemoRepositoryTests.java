@@ -7,8 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.exboot1.entity.MemoDTO;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -101,5 +104,34 @@ public class MemoRepositoryTests {
         result.get().forEach(memoDTO -> {
             System.out.println(memoDTO);
         });
+    }
+
+    @Test
+    // 레포지토리에 작성한 쿼리 메서드가 정상작동하는지 테스트
+    public void testQueryMethods() {
+        List<MemoDTO> memoDTOList = memorepository.findByMnoBetweenOrderByMnoDesc(70L, 80L);
+
+        for(MemoDTO memo : memoDTOList) {
+            System.out.println(memo);
+        }
+    }
+
+    @Test
+    // 레포지토리에 작성한 페이저블 사용 쿼리 메서드가 정상작동하는지 테스트
+    public void testQueryMethodWithPageable() {
+        Pageable page = PageRequest.of(0, 10, Sort.by("mno").descending()); // mno기준 내림차순 정렬 조건
+
+        Page<MemoDTO> result = memorepository.findByMnoBetween(10L,50L,page);
+
+        result.get().forEach(memo -> System.out.println(memo));
+    }
+
+    @Commit // DB에 최종 결과를 커밋하기 위해 사용 -> delete는 기본적으로 롤백 처리되므로 결과 반영이 필요하다.
+    @Transactional // select와 delete가 함께 이뤄지기 때문에 둘 중 하나라도 정상처리 되지 않을 경우 롤백을 위해 사용
+    @Test
+    // 레포지토리에 작성한 삭제 쿼리 메서드가 정상작동하는지 테스트
+    public void testDeleteQueryMethods() {
+        
+        memorepository.deleteMemoByMnoLessThan(10L); // mno이 10보다 작은 데이터 삭제
     }
 }
