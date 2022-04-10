@@ -7,9 +7,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update # ???? ??? ???? DDL ??
+      ddl-auto: update # 프로젝트 실행시 자동으로 DDL 실행
     properties:
       hibernate:
-        format_sql: true # Hibernate? ???? ???? SQL ??
-        show_sql: true # JPA ??? ???? SQL ???
-
+        format_sql: true # Hibernate가 동작하며 발생하는 SQL 출력
+        show_sql: true # JPA 처리시 발생하는 SQL 보여줌
