@@ -33,16 +33,7 @@ MariaDB와 JPA를 사용하는 스프링부트 예제입니다.
 
 ## 실행
 
-### 필수 환경변수
-
-- spring.profiles.active
-- logger.level
-
-on Intellij Community
-- Run/Debug Configurations > bootRun 선택 > Modify options > select add VM options > VM options 입력
-```
--Dspring.profiles.active=local -Dlogger.level=INFO
-```
+쿼리 메서드의 테스트만을 목적으로 하므로 별도의 실행 설정의 변경이 없음!
 
 ---
 
